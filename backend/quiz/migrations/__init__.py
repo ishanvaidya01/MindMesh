@@ -1,0 +1,3 @@
+"""
+Quiz app migrations package.
+"""
