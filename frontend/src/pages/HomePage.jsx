@@ -14,66 +14,17 @@ export default function HomePage() {
       alignItems: 'center',
       justifyContent: 'center',
       padding: '20px',
-      backgroundColor: '#f8fafc',
       position: 'relative',
-      overflow: 'hidden',
     }}>
-      {/* Animated Mesh Gradient Background Elements */}
-      <motion.div
-        animate={{
-          x: [0, 100, 0],
-          y: [0, -100, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: 'absolute', top: '-10%', left: '-10%',
-          width: '50vw', height: '50vw', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-          filter: 'blur(60px)', pointerEvents: 'none',
-        }}
-      />
-      <motion.div
-        animate={{
-          x: [0, -100, 0],
-          y: [0, 100, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: 'absolute', bottom: '-10%', right: '-10%',
-          width: '60vw', height: '60vw', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%)',
-          filter: 'blur(60px)', pointerEvents: 'none',
-        }}
-      />
-      
-      <motion.div
-        animate={{
-          x: [0, 50, 0],
-          y: [0, 50, 0],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          position: 'absolute', top: '20%', right: '20%',
-          width: '40vw', height: '40vw', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%)',
-          filter: 'blur(60px)', pointerEvents: 'none',
-        }}
-      />
 
       {/* Main Content Container */}
       <motion.div
+        className="glass-card"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.8, type: 'spring', bounce: 0.4 }}
         style={{
           position: 'relative', zIndex: 10,
-          background: 'rgba(255, 255, 255, 0.6)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.8)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0,0,0,0.02)',
           borderRadius: 32,
           padding: '60px',
           width: '100%',

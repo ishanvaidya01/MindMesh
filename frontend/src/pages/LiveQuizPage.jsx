@@ -262,6 +262,9 @@ export default function LiveQuizPage() {
       room.submitAnswer((msg) => ws.send(msg), latencyMs);
     }
     setShowResult(true);
+    setTimeout(() => {
+      handleNextQuestion();
+    }, 2000);
   }
 
   function handleNextQuestion() {
@@ -557,18 +560,6 @@ export default function LiveQuizPage() {
                 </motion.div>
               )}
 
-              {/* Next Question Button */}
-              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} style={{ marginTop: 20 }}>
-                <motion.button
-                  className="btn btn-primary"
-                  onClick={handleNextQuestion}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  style={{ width: '100%', padding: '14px', fontSize: '1rem' }}
-                >
-                  {isLastQuestion ? '🏁 Finish Quiz' : 'Next Question →'}
-                </motion.button>
-              </motion.div>
             </motion.div>
           )}
         </motion.div>

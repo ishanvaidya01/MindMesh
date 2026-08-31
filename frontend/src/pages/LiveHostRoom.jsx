@@ -285,12 +285,12 @@ function RestartPanel({ roomCode, onRestart }) {
 }
 
 // ─── Main Host Dashboard ────────────────────────────────────────────────────
-export default function HostDashboard() {
+export default function LiveHostRoom() {
   const { roomCode } = useParams();
   const navigate = useNavigate();
   const ws = useWebSocket();
   const room = useRoomStore();
-  const [activePanel, setActivePanel] = useState('leaderboard');
+  const [activePanel, setActivePanel] = useState('distribution');
 
   const handleMessage = useCallback((data) => {
     room.handleMessage(data);
@@ -503,7 +503,6 @@ export default function HostDashboard() {
             {/* Panel tabs */}
             <div className="tabs" style={{ marginBottom: 16 }}>
               {[
-                ['leaderboard', '🏆 Leaderboard'],
                 ['distribution', '📊 Answer Distribution'],
                 ['hints', '🤖 AI Hints'],
                 ['restart', '🔄 Restart Quiz'],
@@ -518,9 +517,6 @@ export default function HostDashboard() {
             {/* Panel content */}
             <AnimatePresence mode="wait">
               <motion.div key={activePanel} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-                {activePanel === 'leaderboard' && (
-                  <Leaderboard data={room.leaderboard} activeTab={room.activeLeaderboardTab} onTabChange={room.setActiveLeaderboardTab} />
-                )}
                 {activePanel === 'distribution' && (
                   <div className="glass-card" style={{ padding: '20px 24px' }}>
                     <h3 style={{ margin: '0 0 16px', fontSize: '0.9rem', color: '#64748b', textTransform: 'uppercase' }}>

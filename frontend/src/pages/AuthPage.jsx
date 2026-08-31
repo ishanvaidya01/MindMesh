@@ -63,34 +63,18 @@ function AuthPage() {
     <div style={{
       display: 'flex', justifyContent: 'center', alignItems: 'center',
       minHeight: '100vh', padding: 20, position: 'relative',
-      background: 'linear-gradient(135deg, #f8faff 0%, #f1f5ff 50%, #fdf4ff 100%)',
     }}>
-      {/* Decorative blobs */}
-      <div style={{
-        position: 'fixed', top: '10%', left: '10%', width: 320, height: 320,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'fixed', bottom: '10%', right: '10%', width: 280, height: 280,
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(244,63,94,0.12) 0%, transparent 70%)',
-        pointerEvents: 'none',
-      }} />
 
       <motion.div
+        className="glass-card"
         initial={{ opacity: 0, y: 28, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          background: 'white',
-          border: '1px solid rgba(15,23,42,0.08)',
           padding: '48px 44px',
           borderRadius: 28,
           width: '100%',
           maxWidth: '420px',
-          boxShadow: '0 32px 80px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06)',
           position: 'relative', zIndex: 1,
         }}
       >

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const API = 'http://localhost:8000';
 
-export default function HostHome() {
+export default function QuizzesDashboard() {
   const { user, token, isAuthenticated, logout } = useAuthStore();
   const [quizzes, setQuizzes] = useState([]);
   const [loadingQuizzes, setLoadingQuizzes] = useState(false);

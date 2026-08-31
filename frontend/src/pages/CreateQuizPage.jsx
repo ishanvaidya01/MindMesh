@@ -15,6 +15,7 @@ export default function CreateQuizPage() {
   const [owner, setOwner] = useState(user?.username || '');
   const [saveError, setSaveError] = useState('');
   const [questions, setQuestions] = useState([createEmptyQuestion(0)]);
+  const [expandedQIdx, setExpandedQIdx] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(null);
 
   function createEmptyQuestion(order) {
@@ -35,6 +36,7 @@ export default function CreateQuizPage() {
 
   function addQuestion() {
     setQuestions([...questions, createEmptyQuestion(questions.length)]);
+    setExpandedQIdx(questions.length);
   }
 
   function removeQuestion(idx) {
@@ -222,123 +224,154 @@ export default function CreateQuizPage() {
           </div>
 
           {/* Questions */}
-          <AnimatePresence>
-            {questions.map((q, qIdx) => (
-              <motion.div
-                key={qIdx}
-                className="glass-card"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, height: 0 }}
-                style={{ marginBottom: 16 }}
-              >
-                <div className="flex flex-between" style={{ marginBottom: 16, alignItems: 'center' }}>
-                  <h3 style={{ color: 'var(--primary-400)' }}>Question {qIdx + 1}</h3>
-                  <div className="flex gap-sm" style={{ alignItems: 'center' }}>
-                    <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                      <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>Time (s)</label>
-                      <input
-                        type="number"
-                        className="form-input"
-                        style={{ width: 70, textAlign: 'center' }}
-                        value={q.time_limit_seconds}
-                        onChange={e => updateQuestion(qIdx, 'time_limit_seconds', parseInt(e.target.value) || 30)}
-                        min={5}
-                        max={300}
-                      />
-                    </div>
-                    {questions.length > 1 && (
-                      <button type="button" className="btn btn-ghost btn-sm" onClick={() => removeQuestion(qIdx)}
-                        style={{ color: 'var(--error)' }}>✕</button>
-                    )}
-                  </div>
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 16 }}>
-                  <textarea
-                    className="form-textarea"
-                    value={q.text}
-                    onChange={e => updateQuestion(qIdx, 'text', e.target.value)}
-                    placeholder="Enter your question..."
-                    required
-                    rows={2}
-                  />
-                </div>
-
-                {/* Options */}
-                <div style={{ display: 'grid', gap: 10 }}>
-                  {q.options.map((opt, oIdx) => (
-                    <div key={oIdx} style={{
-                      display: 'grid',
-                      gridTemplateColumns: '40px 1fr 1fr',
-                      gap: 8,
-                      alignItems: 'center',
-                    }}>
-                      {/* Correct toggle */}
-                      <button
-                        type="button"
-                        onClick={() => updateOption(qIdx, oIdx, 'is_correct', true)}
-                        style={{
-                          width: 32, height: 32, borderRadius: '50%',
-                          border: `2px solid ${opt.is_correct ? 'var(--success)' : 'var(--glass-border)'}`,
-                          background: opt.is_correct ? 'rgba(16, 185, 129, 0.2)' : 'transparent',
-                          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          color: opt.is_correct ? 'var(--success)' : 'var(--text-muted)',
-                          fontSize: '0.9rem', transition: 'all 0.2s',
-                        }}
-                        title={opt.is_correct ? 'Correct answer' : 'Mark as correct'}
-                      >
-                        {opt.is_correct ? '✓' : String.fromCharCode(65 + oIdx)}
-                      </button>
-
-                      {/* Option text */}
-                      <input
-                        className="form-input"
-                        value={opt.text}
-                        onChange={e => updateOption(qIdx, oIdx, 'text', e.target.value)}
-                        placeholder={`Option ${String.fromCharCode(65 + oIdx)}`}
-                        required
-                      />
-
-                      {/* Misconception tag (only for wrong options) */}
-                      {!opt.is_correct ? (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <AnimatePresence initial={false}>
+              {questions.map((q, qIdx) => {
+                const isExpanded = expandedQIdx === qIdx;
+                return (
+                  <motion.div
+                    key={qIdx}
+                    className="glass-card"
+                    layout
+                    style={{ overflow: 'hidden', padding: isExpanded ? '20px' : '12px 20px' }}
+                  >
+                    {/* Header (Always Visible) */}
+                    <div 
+                      className="flex flex-between" 
+                      style={{ alignItems: 'center', cursor: 'pointer' }}
+                      onClick={() => setExpandedQIdx(isExpanded ? -1 : qIdx)}
+                    >
+                      <h3 style={{ margin: 0, fontSize: '1.1rem', color: isExpanded ? 'var(--primary-400)' : 'var(--text-primary)' }}>
+                        {qIdx + 1}. {q.text ? (q.text.length > 40 ? q.text.slice(0, 40) + '...' : q.text) : 'New Question'}
+                      </h3>
+                      <div className="flex gap-sm" style={{ alignItems: 'center' }} onClick={e => e.stopPropagation()}>
+                        <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: 8, margin: 0 }}>
+                          <label style={{ fontSize: '0.8rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>⏱ (s)</label>
                           <input
+                            type="number"
                             className="form-input"
-                            value={opt.misconception_tag}
-                            onChange={e => updateOption(qIdx, oIdx, 'misconception_tag', e.target.value)}
-                            placeholder="Common mistake label (e.g. sign_error)"
-                            style={{
-                              borderColor: 'rgba(244, 63, 94, 0.2)',
-                              fontSize: '0.85rem',
-                            }}
+                            style={{ width: 60, padding: '4px 8px', textAlign: 'center' }}
+                            value={q.time_limit_seconds}
+                            onChange={e => updateQuestion(qIdx, 'time_limit_seconds', parseInt(e.target.value) || 30)}
+                            min={5}
+                            max={300}
                           />
-                          {opt.ai_suggested_tag && !opt.tag_confirmed_by_host && (
-                            <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-elevated)', padding: '4px 8px', borderRadius: '4px' }}>
-                              <span style={{ fontSize: '0.75rem', color: 'var(--primary-400)', flex: 1 }}>
-                                AI suggested mistake: <strong style={{ fontFamily: 'var(--font-mono)' }}>{opt.ai_suggested_tag}</strong>
-                              </span>
-                              <button type="button" className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '0.75rem' }} onClick={() => confirmAiTag(qIdx, oIdx)}>Confirm</button>
-                              <button type="button" className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '0.75rem', color: 'var(--error)' }} onClick={() => rejectAiTag(qIdx, oIdx)}>Reject</button>
-                            </div>
-                          )}
                         </div>
-                      ) : (
-                        <div style={{
-                          padding: '10px 14px',
-                          fontSize: '0.8rem',
-                          color: 'var(--success)',
-                          fontStyle: 'italic',
-                        }}>
-                          ✓ Correct answer
-                        </div>
-                      )}
+                        {questions.length > 1 && (
+                          <button type="button" className="btn btn-ghost btn-sm" onClick={() => removeQuestion(qIdx)}
+                            style={{ color: 'var(--error)', padding: '4px 8px' }}>✕</button>
+                        )}
+                        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setExpandedQIdx(isExpanded ? -1 : qIdx)} style={{ padding: '4px 8px' }}>
+                          {isExpanded ? '▲' : '▼'}
+                        </button>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+
+                    {/* Body (Only Visible if Expanded) */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          style={{ marginTop: 16 }}
+                        >
+                          <div className="form-group" style={{ marginBottom: 16 }}>
+                            <textarea
+                              className="form-textarea"
+                              value={q.text}
+                              onChange={e => updateQuestion(qIdx, 'text', e.target.value)}
+                              placeholder="Enter your question..."
+                              required
+                              rows={2}
+                            />
+                          </div>
+
+                          {/* Options */}
+                          <div style={{ display: 'grid', gap: 10 }}>
+                            {q.options.map((opt, oIdx) => (
+                              <div key={oIdx} style={{
+                                display: 'grid',
+                                gridTemplateColumns: '40px 1fr 1fr',
+                                gap: 8,
+                                alignItems: 'center',
+                                background: opt.is_correct ? 'rgba(16,185,129,0.05)' : 'var(--bg-elevated)',
+                                padding: 8, borderRadius: 12, border: `1px solid ${opt.is_correct ? 'var(--success)' : 'transparent'}`
+                              }}>
+                                {/* Correct toggle */}
+                                <button
+                                  type="button"
+                                  onClick={() => updateOption(qIdx, oIdx, 'is_correct', true)}
+                                  style={{
+                                    width: 32, height: 32, borderRadius: '50%',
+                                    border: `2px solid ${opt.is_correct ? 'var(--success)' : 'var(--glass-border)'}`,
+                                    background: opt.is_correct ? 'rgba(16, 185, 129, 0.2)' : 'var(--glass-bg)',
+                                    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    color: opt.is_correct ? 'var(--success)' : 'var(--text-muted)',
+                                    fontSize: '0.9rem', transition: 'all 0.2s', margin: '0 auto'
+                                  }}
+                                  title={opt.is_correct ? 'Correct answer' : 'Mark as correct'}
+                                >
+                                  {opt.is_correct ? '✓' : String.fromCharCode(65 + oIdx)}
+                                </button>
+
+                                {/* Option text */}
+                                <input
+                                  className="form-input"
+                                  style={{ background: 'var(--glass-bg)' }}
+                                  value={opt.text}
+                                  onChange={e => updateOption(qIdx, oIdx, 'text', e.target.value)}
+                                  placeholder={`Option ${String.fromCharCode(65 + oIdx)}`}
+                                  required
+                                />
+
+                                {/* Misconception tag (only for wrong options) */}
+                                {!opt.is_correct ? (
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                    <input
+                                      className="form-input"
+                                      value={opt.misconception_tag}
+                                      onChange={e => updateOption(qIdx, oIdx, 'misconception_tag', e.target.value)}
+                                      placeholder="Common mistake label (e.g. sign_error)"
+                                      style={{
+                                        borderColor: 'rgba(244, 63, 94, 0.2)',
+                                        fontSize: '0.85rem',
+                                        background: 'var(--glass-bg)'
+                                      }}
+                                    />
+                                    {opt.ai_suggested_tag && !opt.tag_confirmed_by_host && (
+                                      <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-elevated)', padding: '4px 8px', borderRadius: '4px' }}>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--primary-400)', flex: 1 }}>
+                                          AI suggested: <strong style={{ fontFamily: 'var(--font-mono)' }}>{opt.ai_suggested_tag}</strong>
+                                        </span>
+                                        <button type="button" className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '0.75rem' }} onClick={() => confirmAiTag(qIdx, oIdx)}>Confirm</button>
+                                        <button type="button" className="btn btn-ghost btn-sm" style={{ padding: '2px 8px', fontSize: '0.75rem', color: 'var(--error)' }} onClick={() => rejectAiTag(qIdx, oIdx)}>Reject</button>
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <div style={{
+                                    padding: '10px 14px',
+                                    fontSize: '0.8rem',
+                                    color: 'var(--success)',
+                                    fontWeight: 600,
+                                    display: 'flex', alignItems: 'center', gap: 8
+                                  }}>
+                                    ✨ The Correct Answer
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
 
           {/* Validation error */}
           {saveError && (

@@ -4,8 +4,8 @@ import useAuthStore from './stores/useAuthStore';
 import HomePage from './pages/HomePage';
 import CreateQuizPage from './pages/CreateQuizPage';
 import JoinPage from './pages/JoinPage';
-import HostDashboard from './pages/HostDashboard';
-import HostHome from './pages/HostHome';
+import LiveHostRoom from './pages/LiveHostRoom';
+import QuizzesDashboard from './pages/QuizzesDashboard';
 import LiveQuizPage from './pages/LiveQuizPage';
 import HistoryPage from './pages/HistoryPage';
 import DebriefPage from './pages/DebriefPage';
@@ -30,8 +30,8 @@ function App() {
         <Route path="/auth"                   element={<AuthPage />} />
         <Route path="/create"                 element={<CreateQuizPage />} />
         <Route path="/join"                   element={<JoinPage />} />
-        <Route path="/host/dashboard"         element={<HostHome />} />
-        <Route path="/host/:roomCode"         element={<HostDashboard />} />
+        <Route path="/host/dashboard"         element={<QuizzesDashboard />} />
+        <Route path="/host/:roomCode"         element={<LiveHostRoom />} />
         <Route path="/quiz/:roomCode"         element={<LiveQuizPage />} />
         <Route path="/student-dashboard"      element={<StudentDashboard />} />
         <Route path="/history"               element={<HistoryPage />} />
