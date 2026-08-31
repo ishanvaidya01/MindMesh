@@ -1,6 +1,6 @@
 <div align="center">
   
-# 🧠 MindMesh
+# MindMesh
 
 **The Next-Generation Collaborative Learning & Assessment Platform**
 
@@ -11,28 +11,28 @@
 
 *MindMesh is an intelligent, real-time, event-sourced assessment platform that goes beyond simple multiple-choice questions. It uses advanced calibration scoring and AI-driven insights to help educators truly understand student comprehension.*
 
-[Features](#features) • [Why MindMesh?](#how-mindmesh-beats-the-competition) • [Architecture](#architecture) • [Getting Started](#getting-started)
+[Features](#features) • [Why MindMesh?](#how-mindmesh-beats-the-competition) • [Architecture](#architecture) • [Deployment Status](#deployment-status) • [Getting Started](#getting-started)
 
 </div>
 
 ---
 
-## ✨ Features
+## Features
 
-- ⚡ **Real-Time Synchronized Quizzes**: WebSocket-powered live rooms where hosts control the pace and students answer in real-time.
-- 🎯 **Confidence Calibration Scoring**: Brier-derived proper scoring rule that rewards *confident-correct* answers and penalizes *confident-wrong* answers. It eliminates blind guessing!
-- 🤖 **AI-Powered Question Generation**: Upload a PDF document and our AI instantly generates a full quiz complete with distractors, misconception tags, and detailed explanations.
-- 💡 **Socratic AI Hints**: Students can request hints during a live quiz. The AI analyzes their specific misconception traps and provides gentle, Socratic nudges.
-- 📊 **Dynamic Host Dashboard**: Hosts get real-time vertical bar graphs of student progress and live clustering of common misconceptions/traps.
-- 🔄 **Time-Machine Rewind**: Thanks to an event-sourced architecture, hosts can rewind the quiz state to re-explain a difficult concept.
-- 🎓 **Rich Post-Quiz Analysis**: Students receive a granular breakdown of their performance, complete with AI explanations for correct answers and actionable advice for their specific mistakes.
-- 🔁 **Practice Mode**: Students can retake completed quizzes in practice mode to reinforce concepts without affecting the live leaderboard.
+- **Real-Time Synchronized Quizzes**: WebSocket-powered live rooms where hosts control the pace and students answer in real-time.
+- **Confidence Calibration Scoring**: Brier-derived proper scoring rule that rewards *confident-correct* answers and penalizes *confident-wrong* answers. It eliminates blind guessing!
+- **AI-Powered Question Generation**: Upload a PDF document and our AI instantly generates a full quiz complete with distractors, misconception tags, and detailed explanations.
+- **Socratic AI Hints**: Students can request hints during a live quiz. The AI analyzes their specific misconception traps and provides gentle, Socratic nudges.
+- **Dynamic Host Dashboard**: Hosts get real-time vertical bar graphs of student progress and live clustering of common misconceptions/traps.
+- **Time-Machine Rewind**: Thanks to an event-sourced architecture, hosts can rewind the quiz state to re-explain a difficult concept.
+- **Rich Post-Quiz Analysis**: Students receive a granular breakdown of their performance, complete with AI explanations for correct answers and actionable advice for their specific mistakes.
+- **Practice Mode**: Students can retake completed quizzes in practice mode to reinforce concepts without affecting the live leaderboard.
 
 ---
 
-## 🏆 How MindMesh Beats the Competition
+## How MindMesh Beats the Competition
 
-While platforms like **Kahoot!** and **Quizizz** are great for gamified engagement, they fall short when it comes to deep pedagogical insights and true learning. Here's how MindMesh stands out:
+While platforms like Kahoot! and Quizizz are great for gamified engagement, they fall short when it comes to deep pedagogical insights and true learning. Here's how MindMesh stands out:
 
 | Feature | MindMesh | Kahoot! / Quizizz |
 |---------|----------|-------------------|
@@ -47,7 +47,7 @@ While platforms like **Kahoot!** and **Quizizz** are great for gamified engageme
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 MindMesh is built on a robust, scalable, and auditable architecture designed for real-time concurrency.
 
@@ -70,7 +70,17 @@ At the heart of the backend is the **Event Engine**. Instead of mutating state (
 
 ---
 
-## 🚀 Getting Started
+## Deployment Status
+
+**MindMesh is currently configured for local development and self-hosting.**
+
+While the frontend can be deployed easily on free static tiers (like Cloudflare Pages or Vercel), the robust backend architecture requires persistent infrastructure. Because MindMesh utilizes **Redis** (for WebSockets), **PostgreSQL** (for relational data), and **Celery** (for asynchronous AI processing), it cannot be hosted on free serverless platforms. 
+
+Deploying this architecture to the cloud (via platforms like Render, Railway, or DigitalOcean) requires paid tiers to keep the background workers and persistent databases running continuously. Therefore, to experience the full platform at zero cost, local execution is recommended!
+
+---
+
+## Getting Started
 
 ### Prerequisites
 - Node.js (v18+)
@@ -111,14 +121,14 @@ Make sure you have a Redis server running locally on port 6379 for Django Channe
 
 ---
 
-## 🎨 UI/UX Design Philosophy
+## UI/UX Design Philosophy
 
-MindMesh was designed with a **premium, vibrant aesthetic**. 
+MindMesh was designed with a premium, vibrant aesthetic. 
 - We completely avoid generic colors, utilizing curated HSL palettes, sleek dark modes, and glassmorphism.
 - Every interaction is accompanied by subtle micro-animations (via Framer Motion) to ensure the application feels responsive, dynamic, and alive.
 
 ---
 
 <div align="center">
-  <i>Built with ❤️ for the future of collaborative learning.</i>
+  <i>Built with passion for the future of collaborative learning.</i>
 </div>
