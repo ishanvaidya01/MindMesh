@@ -19,3 +19,15 @@ env/
 # IDEs
 .idea/
 .vscode/
+
+# Environment files
+.env.*
+!.env.example
+
+# Python tooling and runtime artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+staticfiles/
+celerybeat-schedule*
+*.log

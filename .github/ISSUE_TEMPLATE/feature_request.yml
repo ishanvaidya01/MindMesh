@@ -1,0 +1,63 @@
+name: Feature request
+description: Suggest an improvement or new capability for MindMesh
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing an idea. Please describe the problem first, then the proposed
+        solution. Check the README and existing issues before submitting.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What problem would this feature solve? Who is affected?
+      placeholder: Hosts cannot currently ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behaviour you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds or other approaches you have considered.
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Backend REST API
+        - WebSocket / realtime
+        - Frontend UI
+        - PDF import or AI features
+        - Analytics and scoring
+        - Developer experience / setup
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Mockups, references, or implementation notes. Do not include secrets.
+    validations:
+      required: false
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and did not find a duplicate request.
+          required: true
+        - label: This request is about MindMesh, not a third-party service.
+          required: true

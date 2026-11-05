@@ -1,0 +1,92 @@
+name: Bug report
+description: Report a reproducible problem with MindMesh
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Remove secrets, tokens, and personal data
+        from logs before submitting. For security vulnerabilities, follow SECURITY.md instead.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and its impact.
+      placeholder: Describe the observed behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the smallest sequence that reliably reproduces the problem.
+      placeholder: |
+        1. Start the backend and frontend
+        2. Create a room as a host
+        3. Join as a student
+        4. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What happened instead? Include error messages or tracebacks if available.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Backend REST API
+        - WebSocket / realtime
+        - Frontend UI
+        - PDF import or AI features
+        - Database or migrations
+        - Docker / local setup
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Version or commit
+      description: The commit hash, branch, or release you tested.
+      placeholder: main at abc1234
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Python version, Node.js version, and how you run the services.
+      placeholder: Windows 11, Python 3.12, Node.js 22, Docker Desktop for PostgreSQL/Redis
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste logs with secrets and tokens removed.
+      render: shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I removed secrets, tokens, and personal data from this report.
+          required: true
