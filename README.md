@@ -4,6 +4,7 @@
 **Real-time, event-sourced collaborative assessment for classrooms.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![Django](https://img.shields.io/badge/Django-5.1-092E20?logo=django&logoColor=white)
 ![DRF](https://img.shields.io/badge/DRF-3.15-A30000)
