@@ -1,7 +1,6 @@
 # Node.js
 node_modules/
 dist/
-.env
 
 # Python
 __pycache__/
@@ -18,10 +17,8 @@ env/
 
 # IDEs
 .idea/
-.vscode/
 
 # Environment files
-.env.*
 !.env.example
 
 # Python tooling and runtime artifacts
@@ -31,3 +28,4 @@ htmlcov/
 staticfiles/
 celerybeat-schedule*
 *.log
+config.bat
